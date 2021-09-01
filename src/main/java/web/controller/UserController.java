@@ -1,30 +1,68 @@
 package web.controller;
 
+import model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
+import service.roles.RoleService;
+import service.users.UserService;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping(value = "/users")
 public class UserController {
 
-	@RequestMapping(value = "hello", method = RequestMethod.GET)
-	public String printWelcome(ModelMap model) {
-		List<String> messages = new ArrayList<>();
-		messages.add("Hello!");
-		messages.add("I'm Spring MVC-SECURITY application");
-		messages.add("5.2.0 version by sep'19 ");
-		model.addAttribute("messages", messages);
-		return "hello";
-	}
+    private UserService userService;
+    private RoleService roleService;
 
-    @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String loginPage() {
-        return "login";
+    public UserController(UserService userService, RoleService roleService) {
+        this.userService = userService;
+        this.roleService = roleService;
     }
 
+    @GetMapping(value = "")
+    public String allUsers(ModelMap model) {
+        model.addAttribute("users", userService.getAllUsers());
+        return "users/admin";
+    }
+
+    @PostMapping()
+    public String creatUser(@ModelAttribute("user") User user) {
+        System.out.println("PAST ADD " + user);
+        userService.addUser(user);
+        return "redirect:/users";
+    }
+
+    @GetMapping(value = "/{id}")//показать 1 юзера
+    public String getUser(@PathVariable("id") long id, ModelMap model) {
+        model.addAttribute("users", userService.getUserById(id));
+        return "users/admin";
+    }
+
+    @GetMapping(value = "/new")
+    public String addUser(ModelMap model) {
+        model.addAttribute("user", new User());
+        return "users/new";
+    }
+
+
+    @GetMapping(value = "/{id}/delete")
+    public String deleteUser(@PathVariable("id") long id) {
+        userService.deleteUserById(id);
+        return "redirect:/users";
+    }
+
+    @GetMapping(value = "/{id}/edit")
+    public String editUser(ModelMap model, @PathVariable("id") long id) {
+        model.addAttribute("userForEdit", userService.getUserById(id));
+        System.out.println(userService.getUserById(id));
+        return "users/edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("userForEdit") User updateUser,
+                         @PathVariable("id") int id) {
+        System.out.println("bbbbbbbbbbb" + updateUser.toString()   );
+        userService.updateUser(updateUser);
+        return "redirect:/users";
+    }
 }

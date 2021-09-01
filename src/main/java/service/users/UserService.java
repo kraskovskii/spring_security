@@ -1,20 +1,22 @@
-package dao;
+package service.users;
 
 import model.User;
 
 import java.util.List;
 
-public interface UserDao {
+public interface UserService {
+
     public List<User> getAllUsers();
 
     public void addUser(User user);
 
     public void updateUser(User user);
 
-    public User getUserById(long id);
+    public User getUserById(Long id);
 
     public void deleteUser(User user);
 
     public void deleteUserById(long id);
 
+//    public User getUserByFirstName(String firstName);
 }

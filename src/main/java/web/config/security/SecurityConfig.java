@@ -1,4 +1,4 @@
-package web.config;
+package web.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -6,18 +6,34 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import web.config.handler.LoginSuccessHandler;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
+import web.config.security.handler.LoginSuccessHandler;
+import web.config.security.handler.SuccessUserHandler;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private UserDetailsService userDetailsService;
+    private final SuccessUserHandler successUserHandler;
+
+    public SecurityConfig(UserDetailsService userDetailsService, SuccessUserHandler successUserHandler) {
+        this.userDetailsService = userDetailsService;
+        this.successUserHandler = successUserHandler;
+    }
+
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("ADMIN").password("ADMIN").roles("ADMIN");
+        auth.userDetailsService(userDetailsService);
+//        auth.inMemoryAuthentication().withUser("admin").password("123").roles("ADMIN");
+//        auth.inMemoryAuthentication().withUser("user").password("123").roles("USER");
     }
 
     @Override
@@ -46,12 +62,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable();
 
         http
+
                 // делаем страницу регистрации недоступной для авторизированных пользователей
                 .authorizeRequests()
                 //страницы аутентификаци доступна всем
                 .antMatchers("/login").anonymous()
+//                .antMatchers("/users/**").anonymous()
                 // защищенные URL
-                .antMatchers("/hello").access("hasAnyRole('ADMIN')").anyRequest().authenticated();
+                .antMatchers("/users/**").access("hasAuthority('ROLE_ADMIN')")
+                .antMatchers("/user/**").access("hasAuthority('ROLE_USER')")
+                .antMatchers("/user/**").access("hasAuthority('ROLE_ADMIN')")
+
+                .anyRequest().authenticated();
     }
 
     @Bean
