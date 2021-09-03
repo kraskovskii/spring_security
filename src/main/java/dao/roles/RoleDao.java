@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Set;
 
 public interface RoleDao {
-    public Set<Role> getAllUsers();
+    public List<Role> getAllRoles();
 
     public void addRole(Role role);
 
-    public void updateUser(Role role);
+    public void updateRole(Role role);
 
     public Role getRoleById(long id);
 
@@ -18,5 +18,6 @@ public interface RoleDao {
 
     public void deleteRoleById(long id);
 
-    Role getRoleByName(String name);
+    public Role getRoleByName(String name);
+
 }

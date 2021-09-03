@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private UserDao userDao;
+    private final UserDao userDao;
     private final RoleDao roleDao;
 
     public UserDetailsServiceImpl(UserDao userDao, RoleDao roleDao) {
@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     // Для создания UserDetails используется интерфейс UserDetailsService, с единственным методом:
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        User user = userDao.getUserFirstName(userName);
+         User user = userDao.getUserFirstName(userName);
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }

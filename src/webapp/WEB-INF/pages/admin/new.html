@@ -6,8 +6,8 @@
     <title>New User</title>
 </head>
 <body>
-<h1>Users</h1>
-<form th:method="POST" th:action="@{/users}" th:object="${user}">
+<h1>New User</h1>
+<form th:method="POST" action="/admin" th:object="${user}">
 
     <label for="firstname">Enter Name </label>
     <input type="text" th:field="*{firstName}" id="firstname"/><br/><br/>
@@ -20,20 +20,16 @@
 
 
     <b>Add roles</b><br/>
-    <input type=checkbox id=adminId th:field="*{roles}" value="ROLE_ADMIN">
-    <label for="adminId">Admin</label>
-
-    <input type=checkbox id=userId th:field="*{roles}" value="ROLE_USER">
-    <label for="userId">User</label>
-
-    <br/>
-    <br/>
+    <label>ADMIN</label>
+    <input type="checkbox" th:value="ROLE_ADMIN" th:name="rolesList"/> <br/>
+    <label>USER</label>
+    <input type="checkbox" th:value="ROLE_USER" th:name="rolesList"/> <br/><br/>
 
     <input type="submit" value=" Create "/>
 </form>
-<br/><br/>
+<br/>
 <input type="button" value="Cancel"
-       onclick="window.location.href = '/users'">
+       onclick="window.location.href = '/admin'">
 <br/><br/>
 <input type="button" value="Logout"
        onclick="window.location.href = '/logout'">

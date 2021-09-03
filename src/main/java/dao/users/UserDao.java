@@ -18,5 +18,4 @@ public interface UserDao {
     public void deleteUserById(long id);
 
     public User getUserFirstName(String firstname);
-
 }

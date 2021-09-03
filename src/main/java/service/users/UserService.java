@@ -1,5 +1,6 @@
 package service.users;
 
+import model.Role;
 import model.User;
 
 import java.util.List;
@@ -18,5 +19,5 @@ public interface UserService {
 
     public void deleteUserById(long id);
 
-//    public User getUserByFirstName(String firstName);
+    public User getUserFirstName(String name);
 }

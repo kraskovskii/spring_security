@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Repository
@@ -14,18 +16,18 @@ public class RoleDaoImpl implements RoleDao {
     EntityManager entityManager;
 
     @Override
-    public Set<Role> getAllUsers() {
-        return null;
+    public List<Role> getAllRoles() {
+        return entityManager.createQuery("select r from Role r").getResultList();
     }
 
     @Override
     public void addRole(Role role) {
-
+        entityManager.persist(role);
     }
 
     @Override
-    public void updateUser(Role role) {
-
+    public void updateRole(Role role) {
+        entityManager.merge(role);
     }
 
     @Override
@@ -35,12 +37,12 @@ public class RoleDaoImpl implements RoleDao {
 
     @Override
     public void deleteRole(Role role) {
-
+        entityManager.remove(role);
     }
 
     @Override
     public void deleteRoleById(long id) {
-
+        entityManager.remove(entityManager.find(Role.class, id));
     }
 
     @Override

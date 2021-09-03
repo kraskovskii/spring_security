@@ -1,9 +1,12 @@
 package service.users;
 
+import dao.roles.RoleDao;
 import dao.users.UserDao;
 import model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import service.roles.RoleService;
 
 import java.util.List;
 
@@ -12,11 +15,13 @@ import java.util.List;
  public class UserServiceImp implements UserService{
 
     public UserDao userDao;
-
+    @Autowired
     public UserServiceImp(UserDao userDao) {
         this.userDao = userDao;
     }
 
+    public UserServiceImp() {
+    }
 
     @Override
     public List<User> getAllUsers() {
@@ -46,5 +51,10 @@ import java.util.List;
     @Override
     public void deleteUserById(long id) {
         userDao.deleteUserById(id);
+    }
+
+    @Override
+    public User getUserFirstName(String name) {
+        return userDao.getUserFirstName(name);
     }
 }

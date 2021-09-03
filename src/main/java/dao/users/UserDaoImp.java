@@ -44,9 +44,10 @@ public class UserDaoImp implements UserDao {
     @Override
     public User getUserFirstName(String firstName) {
         return entityManager.createQuery(
-                "from User u where u.firstName = :firstName", User.class)
+                        "from User u where u.firstName = :firstName", User.class)
                 .setParameter("firstName", firstName)
                 .getSingleResult();
     }
+
 }
 

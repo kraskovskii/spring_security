@@ -9,10 +9,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import web.config.security.handler.LoginSuccessHandler;
-import web.config.security.handler.SuccessUserHandler;
+//import web.config.security.handler.SuccessUserHandler;
+//import web.config.security.handler.SuccessUserHandler;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -22,11 +25,9 @@ import javax.servlet.ServletException;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailsService userDetailsService;
-    private final SuccessUserHandler successUserHandler;
 
-    public SecurityConfig(UserDetailsService userDetailsService, SuccessUserHandler successUserHandler) {
+    public SecurityConfig(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
-        this.successUserHandler = successUserHandler;
     }
 
     @Override
@@ -67,13 +68,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //страницы аутентификаци доступна всем
                 .antMatchers("/login").anonymous()
-//                .antMatchers("/users/**").anonymous()
                 // защищенные URL
-                .antMatchers("/users/**").access("hasAuthority('ROLE_ADMIN')")
+                .antMatchers("/admin/**").access("hasAuthority('ROLE_ADMIN')")
                 .antMatchers("/user/**").access("hasAuthority('ROLE_USER')")
-                .antMatchers("/user/**").access("hasAuthority('ROLE_ADMIN')")
+//                .antMatchers("/user/**").access("hasAuthority('ROLE_ADMIN')")
 
                 .anyRequest().authenticated();
+        
+        //filter utf-8
+        CharacterEncodingFilter filter = new CharacterEncodingFilter();
+        filter.setEncoding("UTF-8");
+        filter.setForceEncoding(true);
+        http.addFilterBefore(filter, CsrfFilter.class);
     }
 
     @Bean
