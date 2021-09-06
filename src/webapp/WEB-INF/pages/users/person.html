@@ -15,16 +15,12 @@
         <th>Role</th>
     </tr>
 
-
     <tr th:block th:name="${user}">
-
         <td th:text="${user.firstName}"></td>
         <td th:text="${user.lastName}"></td>
         <td th:text="${user.password}"></td>
         <td th:text="${user.roles}"></td>
-
     </tr>
-
 </table>
 
 <br><br>
@@ -34,7 +30,6 @@
 <br/><br/>
 <input onclick="window.location.href = '/logout'" type="button"
        value="Logout">
-
 
 </body>
 </html>

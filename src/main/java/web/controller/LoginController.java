@@ -14,7 +14,8 @@ import java.util.List;
 public class LoginController {
 
 
-	UserService userService;
+	private UserService userService;
+
 	public LoginController(UserService userService) {
 		this.userService = userService;
 	}
@@ -26,8 +27,6 @@ public class LoginController {
 		messages.add("I'm Spring MVC-SECURITY application");
 		messages.add("5.2.0 version by sep'19 ");
 		model.addAttribute("messages", messages);
-		//model.addAttribute("userId", userService.getUserById(id));
-
 		return "hello";
 	}
 

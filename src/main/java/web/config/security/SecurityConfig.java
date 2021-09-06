@@ -12,13 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.filter.HiddenHttpMethodFilter;
 import web.config.security.handler.LoginSuccessHandler;
-//import web.config.security.handler.SuccessUserHandler;
-//import web.config.security.handler.SuccessUserHandler;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 
 @Configuration
 @EnableWebSecurity

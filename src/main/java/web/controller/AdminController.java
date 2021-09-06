@@ -13,9 +13,9 @@ import java.util.Arrays;
 @RequestMapping(value = "/admin")
 public class AdminController {
 
-    public UserService userService;
+    private UserService userService;
 
-    public RoleService roleService;
+    private RoleService roleService;
 
     public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;

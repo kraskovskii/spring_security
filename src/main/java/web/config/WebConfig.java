@@ -34,7 +34,6 @@ import java.util.Properties;
 @ComponentScan("service")
 @ComponentScan("dao")
 @ComponentScan("web")
-@ComponentScan(value = "web.config.security.handler")
 public class WebConfig implements WebMvcConfigurer {
 
     private final ApplicationContext applicationContext;

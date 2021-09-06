@@ -2,13 +2,9 @@ package service.roles;
 
 import dao.roles.RoleDao;
 import model.Role;
-import model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,7 +13,7 @@ import java.util.Set;
 @Transactional
 public class RoleServiceImpl implements RoleService {
 
-    RoleDao roleDao;
+    private RoleDao roleDao;
 
     public RoleServiceImpl(RoleDao roleDao) {
         this.roleDao = roleDao;
@@ -54,14 +50,12 @@ public class RoleServiceImpl implements RoleService {
     }
 
     public Set<Role> setRoleByName(String name, String[] rolesName) {
-       Set<Role> roleSet = new HashSet<Role>();
-       if (rolesName!=null) {
-           for (String roleName : rolesName) {
-               roleSet.add(roleDao.getRoleByName(roleName));
-           }
-       }
+        Set<Role> roleSet = new HashSet<Role>();
+        if (rolesName != null) {
+            for (String roleName : rolesName) {
+                roleSet.add(roleDao.getRoleByName(roleName));
+            }
+        }
         return roleSet;
     }
-
-
 }

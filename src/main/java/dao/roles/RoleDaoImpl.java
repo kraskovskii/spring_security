@@ -5,15 +5,13 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public class RoleDaoImpl implements RoleDao {
 
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
     @Override
     public List<Role> getAllRoles() {

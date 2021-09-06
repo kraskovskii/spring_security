@@ -18,7 +18,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/{id}")//показать 1 юзера
+    @GetMapping(value = "/{id}")
     public String getUser(
             @PathVariable("id") long id,
             ModelMap model) {

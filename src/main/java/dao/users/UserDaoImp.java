@@ -1,9 +1,11 @@
 package dao.users;
 
 import model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Access;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.List;
 public class UserDaoImp implements UserDao {
 
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
     public List<User> getAllUsers() {
         List<User> list = entityManager.createQuery("from User", User.class).getResultList();

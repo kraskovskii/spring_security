@@ -1,5 +1,7 @@
 package model;
 
+import org.hibernate.annotations.BatchSize;
+import org.intellij.lang.annotations.Pattern;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,6 +16,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
 
     @Column(name = "firstname")
     private String firstName;
